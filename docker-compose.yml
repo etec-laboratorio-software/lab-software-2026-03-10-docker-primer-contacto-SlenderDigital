@@ -1,0 +1,46 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: yt-downloader-backend
+    restart: unless-stopped
+    volumes:
+      # Persist downloaded videos and the SQLite database outside the container
+      - ./storage:/app/storage
+      - ./backend/database/sqlite:/app/backend/database/sqlite
+    environment:
+      - PYTHONUNBUFFERED=1
+    ports:
+      - "8001:8001"   # Exposed for direct API access / Swagger UI at http://localhost:8001/docs
+    networks:
+      - yt-net
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8001/docs')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      args:
+        # During build the browser calls this URL, so it must be reachable from
+        # the user's machine.  Override with `VITE_API_URL` in a .env file if
+        # you deploy to a different host/port.
+        VITE_API_URL: http://localhost:8001/api
+    container_name: yt-downloader-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - yt-net
+
+networks:
+  yt-net:
+    driver: bridge
