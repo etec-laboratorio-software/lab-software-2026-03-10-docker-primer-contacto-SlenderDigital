@@ -31,8 +31,8 @@ La forma más sencilla de correr la app. Solo necesitas tener instalado **Docker
 ### 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/SlenderDigital/FreeYoutubeWEB
-cd FreeYoutubeWEB
+git clone https://github.com/etec-laboratorio-software/lab-software-2026-03-10-docker-primer-contacto-SlenderDigital
+cd lab-software-2026-03-10-docker-primer-contacto-SlenderDigital
 ```
 
 ### 2. Construir y levantar los contenedores
@@ -47,7 +47,7 @@ La primera vez tarda ~2–3 minutos mientras descarga las imágenes base e insta
 
 | Servicio | URL |
 |---|---|
-| Frontend (app) | http://localhost:3000 |
+| Frontend (app) | http://localhost |
 | Backend API docs (Swagger) | http://localhost:8001/docs |
 
 ### 4. Detener los contenedores
@@ -96,8 +96,8 @@ npm --version
 ### 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/SlenderDigital/FreeYoutubeWEB
-cd FreeYoutubeWEB
+git clone https://github.com/etec-laboratorio-software/lab-software-2026-03-10-docker-primer-contacto-SlenderDigital
+cd lab-software-2026-03-10-docker-primer-contacto-SlenderDigital
 ```
 
 ### 2. Configurar el Backend
@@ -250,11 +250,13 @@ docker compose logs -f backend
 docker compose logs -f frontend
 ```
 
-**Conflicto de puertos** — si el 3000 u 8001 ya están en uso, cambia el puerto en `docker-compose.yml`:
+**Conflicto de puertos** — si el 80 u 8001 ya están en uso, cambia el puerto en `docker-compose.yml`:
 ```yaml
 ports:
-  - "3001:80"   # cambia 3000 por cualquier puerto libre
+  - "8080:80"   # cambia 80 por cualquier puerto libre
 ```
+
+Luego reconstruye con `docker compose up --build`.
 
 **Reconstruir desde cero** (útil si algo quedó en un estado inconsistente):
 ```bash
