@@ -41,7 +41,7 @@ cd lab-software-2026-03-10-docker-primer-contacto-SlenderDigital
 docker compose up --build
 ```
 
-La primera vez tarda ~2–3 minutos mientras descarga las imágenes base e instala dependencias.
+La primera vez tarda ~2–3 minutos mientras descarga las imágenes base e instala dependencias. Lee si faltan permisos y usa _sudo_
 
 ### 3. Abrir la app
 
