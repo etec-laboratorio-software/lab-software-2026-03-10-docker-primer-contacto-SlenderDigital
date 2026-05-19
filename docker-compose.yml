@@ -1,0 +1,40 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: yt-downloader-backend
+    restart: unless-stopped
+    volumes:
+      - ./storage:/app/storage
+      - ./backend/database/sqlite:/app/backend/database/sqlite
+    environment:
+      - PYTHONUNBUFFERED=1
+    networks:
+      - yt-net
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8001/docs')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      args:
+        VITE_API_URL: /api
+    container_name: yt-downloader-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - yt-net
+
+networks:
+  yt-net:
+    driver: bridge

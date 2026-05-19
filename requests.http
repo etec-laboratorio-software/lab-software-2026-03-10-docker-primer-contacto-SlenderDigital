@@ -1,0 +1,87 @@
+### ===================================
+### YouTube Downloader API - REST Client (UPDATED)
+### ===================================
+
+### Variables
+@baseUrl = http://localhost:8001/api
+@videoUrl = https://www.youtube.com/watch?v=dQw4w9WgXcQ
+@videoUrl2 = https://www.youtube.com/watch?v=jNQXAC9IVRw
+@resolution = 720p
+@videoTitle = Rick Astley - Never Gonna Give You Up (Official Video) (4K Remaster)
+@newVideoTitle = Rick Astley - Never Gonna Give You Up
+
+
+###############################################
+## 1. VIDEO INFO – Básico
+###############################################
+
+GET {{baseUrl}}/yt/video-info?video_url={{videoUrl}}
+
+###
+GET {{baseUrl}}/yt/video-info?video_url={{videoUrl2}}
+
+
+
+###############################################
+## 2. DOWNLOAD – Básico
+###############################################
+
+GET {{baseUrl}}/yt/download_video?video_url={{videoUrl}}&resolution=720p
+###
+GET {{baseUrl}}/yt/download_video?video_url={{videoUrl}}&resolution=1080p
+###
+GET {{baseUrl}}/yt/download_video?video_url={{videoUrl}}&resolution=480p
+
+
+
+###############################################
+## 3. HISTORY – Consultas
+###############################################
+
+GET {{baseUrl}}/history/videos
+###
+GET {{baseUrl}}/history/video/?title={{videoTitle}}
+
+
+
+###############################################
+## 4. SCENARIO A – Workflow sin borrar nada
+## (Seguro, no rompe nada después)
+###############################################
+
+###
+# 2. Download
+GET {{baseUrl}}/yt/download_video?video_url={{videoUrl}}&resolution=720p
+
+###
+# 3. Check history
+GET {{baseUrl}}/history/videos
+
+###
+# 4. Get specific video
+GET {{baseUrl}}/history/video/?title={{videoTitle}}
+
+
+###
+# 3. Confirm video still exists
+GET {{baseUrl}}/history/video/?title={{newVideoTitle}}
+
+###############################################
+## 7. CLEAR HISTORY – Full wipe
+## ⚠️ Ejecutar SOLO al final
+###############################################
+
+DELETE {{baseUrl}}/history/clear
+
+
+###############################################
+## 9. ERROR HANDLING TESTS – No dependen del historial
+###############################################
+
+GET {{baseUrl}}/yt/video-info?video_url=https://invalid-url.com
+###
+GET {{baseUrl}}/history/video/?title=NonExistentVideo
+###
+GET {{baseUrl}}/yt/download_video?video_url={{videoUrl}}&resolution=4320p
+###
+DELETE {{baseUrl}}/history/video/999
