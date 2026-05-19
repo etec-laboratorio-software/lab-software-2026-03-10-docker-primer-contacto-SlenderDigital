@@ -48,7 +48,6 @@ La primera vez tarda ~2–3 minutos mientras descarga las imágenes base e insta
 | Servicio | URL |
 |---|---|
 | Frontend (app) | http://localhost |
-| Backend API docs (Swagger) | http://localhost:8001/docs |
 
 ### 4. Detener los contenedores
 
