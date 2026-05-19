@@ -61,5 +61,3 @@ Los videos descargados y la base de datos **sobreviven reinicios** porque se gua
 
 - `./storage/` → archivos `.mp4` descargados
 - `./backend/database/sqlite/` → base de datos SQLite
-
-Luego reconstruye con `docker compose up --build`.
