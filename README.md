@@ -62,13 +62,4 @@ Los videos descargados y la base de datos **sobreviven reinicios** porque se gua
 - `./storage/` → archivos `.mp4` descargados
 - `./backend/database/sqlite/` → base de datos SQLite
 
-### Despliegue en otro host o dominio
-
-`VITE_API_URL` se compila dentro del bundle del frontend. Si desplegas en un servidor con una IP o dominio diferente, edita `docker-compose.yml` antes de construir:
-
-```yaml
-args:
-  VITE_API_URL: https://tu-dominio.com/api
-```
-
 Luego reconstruye con `docker compose up --build`.
